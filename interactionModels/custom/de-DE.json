@@ -1,0 +1,83 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "lia lernquiz",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AnswerIntent",
+          "slots": [
+            {
+              "name": "CHOICE",
+              "type": "CHOICE"
+            }
+          ],
+          "samples": [
+            "die korrekte antwort ist {CHOICE}",
+            "{CHOICE} ist korrekt",
+            "{CHOICE} ist richtig",
+            "{CHOICE}",
+            "die richtige antwort ist {CHOICE}",
+            "die antwort ist {CHOICE}"
+          ]
+        },
+        {
+          "name": "QuizIntent",
+          "slots": [],
+          "samples": [
+            "starte quiz",
+            "starte das lernen",
+            "lass uns lernen",
+            "starte ein quiz",
+            "starte das quiz",
+            "starte das lernquiz",
+            "für ein quiz"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "D"
+              }
+            },
+            {
+              "name": {
+                "value": "C"
+              }
+            },
+            {
+              "name": {
+                "value": "B"
+              }
+            },
+            {
+              "name": {
+                "value": "A"
+              }
+            }
+          ],
+          "name": "CHOICE"
+        }
+      ]
+    }
+  },
+  "version": "9"
+}
