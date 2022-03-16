@@ -1,0 +1,76 @@
+{
+    "type": "APL",
+    "version": "1.8",
+    "license": "Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.\nSPDX-License-Identifier: LicenseRef-.amazon.com.-AmznSL-1.0\nLicensed under the Amazon Software License  http://aws.amazon.com/asl/",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.5.0"
+        }
+    ],
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "height": "100%",
+                "width": "100%",
+                "items": [
+                    {
+                        "type": "AlexaBackground",
+                        "backgroundImageSource": "https://www.linkpicture.com/q/gelber-hintergrund-mit-dynamischen-abstrakten-formen_1393-144.jpg"
+                    },
+                    {
+                        "source": "${payload.display.image}",
+                        "align": "left",
+                        "scale": "best-fill",
+                        "type": "Image",
+                        "id": "pic",
+                        "width": "500dp",
+                        "height": "300dp",
+                        "alignSelf": "center",
+                        "top": "200",
+                        "left": "200"
+                    },
+                    {
+                        "text": "${payload.display.title}",
+                        "fontSize": "20dp",
+                        "textAlignVertical": "top",
+                        "fontWeight": "bold",
+                        "maxLines": 2,
+                        "type": "Text",
+                        "id": "quest",
+                        "width": "1000",
+                        "maxWidth": "1000",
+                        "height": "120",
+                        "minHeight": "120",
+                        "maxHeight": "120",
+                        "paddingTop": "12dp",
+                        "paddingBottom": "12dp",
+                        "alignSelf": "start",
+                        "grow": 3,
+                        "left": "20",
+                        "bottom": "250"
+                    },
+                    {
+                        "text": "${payload.display.text}",
+                        "fontSize": "18",
+                        "type": "Text",
+                        "id": "answ",
+                        "width": "400",
+                        "height": "300",
+                        "paddingBottom": "12dp",
+                        "paddingTop": "0",
+                        "grow": 1,
+                        "position": "relative",
+                        "left": "20",
+                        "bottom": "200"
+                    }
+                ]
+            }
+        ]
+    },
+    "layouts": {}
+}
