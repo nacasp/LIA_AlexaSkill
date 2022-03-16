@@ -4,6 +4,7 @@ var correctAnswer;
 var questionNum=0;
 var currentQuestion="";
 var choices="";
+var finalScore=0;
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -12,8 +13,8 @@ const LaunchRequestHandler = {
     handle(handlerInput) {
         const speakOutput = 'Willkommen beim Quiz: LIA, lernen im Alltag! Sage "starte quiz", um mit dem Lernen zu beginnen.';
 
-        var title = "LIA - Lernen im Alltag";
-        var cardText = "Willkommen beim Quiz: LIA, lernen im Alltag! ";
+        var title = "Willkommen beim Quiz: LIA, lernen im Alltag!";
+        var cardText = "Sage 'starte quiz', um mit dem Lernen zu beginnen.";
         var image = "https://bilderupload.org/image/ce1a78521-827f55e3-7a9b-4b8f-a46d-1.jpg";
 
         return handlerInput.responseBuilder
@@ -25,7 +26,7 @@ const LaunchRequestHandler = {
                  document: require('./display_temp.json'),
                  datasources: {
                     'display': {
-                    'title':title,
+                    'title': title,
                     'text': cardText,
                     'image': image
                    }
@@ -69,7 +70,7 @@ const QuizHandler = {
         handlerInput.attributesManager.setSessionAttributes(attributes);
        
         var title = `Frage #${attributes.counter}`;
-        var cardText = currentQuestion + "\n" + choices;
+        var cardText = currentQuestion + "\n\n" + choices;
         var image = link[questionNum-1];
         
         return response.speak(speakOutput)
@@ -80,8 +81,8 @@ const QuizHandler = {
                          document: require('./display_temp.json'),
                          datasources: {
                             'display': {
-                            'title':title,
-                            'text': cardText,
+                            'title':currentQuestion,
+                            'text': choices,
                             'image': image
                            }
                          }
@@ -143,7 +144,7 @@ const QuizAnswerHandler = {
       speakOutput += question;
       repromptOutput = question;
       var title = `Frage #${attributes.counter}`;
-        var cardText = currentQuestion + "\n" + choices;
+        var cardText = currentQuestion + "\n\n" + choices;
         var image = link[questionNum-1];
         console.log("questionNum " + questionNum);
         console.log("question added");
@@ -156,8 +157,8 @@ const QuizAnswerHandler = {
             document: require('./display_temp.json'),
                  datasources: {
                      'display': {
-                     'title':title,
-                     'text': cardText,
+                     'title':currentQuestion,
+                     'text': choices,
                      'image': image
                      }
                 }
@@ -197,7 +198,8 @@ const ExitHandler = {
     console.log("Inside ExitHandler");
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
-
+    finalScore=attributes.quizScore;
+    
     return request.type === 'IntentRequest' && (
               request.intent.name === 'AMAZON.StopIntent' ||
               request.intent.name === 'AMAZON.PauseIntent' ||
@@ -207,6 +209,18 @@ const ExitHandler = {
   handle(handlerInput) {
     return handlerInput.responseBuilder
       .speak(exitSkillMessage)
+      .addDirective({
+                 type: 'Alexa.Presentation.APL.RenderDocument',
+                 version: '1.0',
+                 document: require('./display_temp.json'),
+                 datasources: {
+                    'display': {
+                    'title': exitSkillMessage,
+                    'text': getFinalScore(finalScore, 7),
+                    'image': "https://bilderupload.org/image/ce1a78521-827f55e3-7a9b-4b8f-a46d-1.jpg"
+                   }
+                 }
+            })
       .getResponse();
   },
 };
@@ -246,7 +260,7 @@ const backgroundImagePath = "https://cdn.pixabay.com/photo/2021/06/24/11/18/back
 const speechConsCorrect = ['Richtig!', 'Korrekt!', 'Genau!'];
 const speechConsWrong = ['Leider falsch.', 'Versuchs nochmal.', 'Nein, das wars nicht.'];
 const data = [
-  {Frage: 'Kann man mit exklusiven Gateways einen Entscheidungspunkt in einem Prozessmodell darstellen?', Antworten: 'A:Ja,  B:Nein', richtigeAntwort: 'A'},
+  {Frage: 'Kann man mit exklusiven Gateways einen Entscheidungspunkt in einem Prozessmodell darstellen?', Antworten: 'A:Ja, B:Nein', richtigeAntwort: 'A'},
   {Frage: 'Welcher logistische Ausdruck entspricht dem Inklusiven Gateway?', Antworten: 'A:XOR,  B:OR,  C:AND', richtigeAntwort: 'B'},
   {Frage: 'Ist es möglich, dass in diesem Prozess Steak und Salat gleichzeitig verzehrt werden?', Antworten: 'A:Ja,  B:Nein', richtigeAntwort: 'B'},
   {Frage: 'Wer darf etwas essen?', Antworten: 'A:Nur Johnny,  B:Jack und Johnny, C:Jack, Johnny und Jim, D:Nur Jack', richtigeAntwort: 'D'},
