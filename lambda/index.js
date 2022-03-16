@@ -19,7 +19,19 @@ const LaunchRequestHandler = {
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
-            .withStandardCard(title,cardText,null, image)
+            .addDirective({
+                 type: 'Alexa.Presentation.APL.RenderDocument',
+                 version: '1.0',
+                 document: require('./display_temp.json'),
+                 datasources: {
+                    'display': {
+                    'title':title,
+                    'text': cardText,
+                    'image': image
+                   }
+                 }
+            })
+            //.withStandardCard(title,cardText,null, image)
             .getResponse();
     }
 };
@@ -62,7 +74,19 @@ const QuizHandler = {
         
         return response.speak(speakOutput)
                    .reprompt(repromptOutput)
-                   .withStandardCard(title,cardText,null,image)
+                   .addDirective({
+                         type: 'Alexa.Presentation.APL.RenderDocument',
+                         version: '1.0',
+                         document: require('./display_temp.json'),
+                         datasources: {
+                            'display': {
+                            'title':title,
+                            'text': cardText,
+                            'image': image
+                           }
+                         }
+                    })
+                   //.withStandardCard(title,cardText,null,image)
                    .getResponse();
         }
 };
@@ -126,7 +150,19 @@ const QuizAnswerHandler = {
 
       return response.speak(speakOutput)
       .reprompt(repromptOutput)
-      .withStandardCard(title,cardText,image)
+      .addDirective({
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document: require('./display_temp.json'),
+                 datasources: {
+                     'display': {
+                     'title':title,
+                     'text': cardText,
+                     'image': image
+                     }
+                }
+        })
+      //.withStandardCard(title,cardText,image)
       .getResponse();
     }
     else { //if last question
